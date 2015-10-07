@@ -375,35 +375,50 @@ inside(N,Tam):-
 	insideAux(N,Tam),
 	right(120).
 	
-circleTonelAux(0,Tam):-
-	tonel(2,Tam).
+tapetePanalAux(0,Tam):-
+	forward(Tam).
 
-circleTonelAux(N,Tam):-
-	Seg is Tam - 1,
-	Lvl is N-1,
 	
-	circleTonelAux(Lvl,Seg),	
-
+tapetePanalAux(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	Neg is -1*Seg,
+	
+	tapeteinternoAux(Lvl,Seg),
+	right(90),
+	tapeteinternoAux(Lvl,Seg),
+	left(90),
+	tapeteinternoAux(Lvl,Seg),
+	left(90),
+	tapeteinternoAux(Lvl,Seg),
+	right(90),
+	tapeteinternoAux(Lvl,Seg),
+	
 	penup,
-	right(120),
-	forward(Tam),
+	forward(Neg),
+	right(180),
 	pendown,
-	circleTonelAux(Lvl,Seg),
-
+	panalAux(Lvl,Seg),	
+	right(90),
+	panalAux(Lvl,Seg),
+	right(90),
+	panalAux(Lvl,Seg),
+	right(90),
+	panalAux(Lvl,Seg),
 	penup,
-	right(120),
-	forward(Tam),
-	pendown,
-	circleTonelAux(Lvl,Seg),
-	penup,
-	right(120),
-	forward(Tam),
+	left(90),
+	forward(Seg),
 	pendown.
 	
-
-circleTonel(N,Tam):-
+tapetePanal(Lvl,Tam):-
 	logo,
-	circleTonelAux(N,Tam).
+	tapetePanalAux(Lvl,Tam),
+	right(90),
+	tapetePanalAux(Lvl,Tam),
+	right(90),
+	tapetePanalAux(Lvl,Tam),
+	right(90),
+	tapetePanalAux(Lvl,Tam).	
 /*  
     ProLOGO - LOGO in Prolog.
 
