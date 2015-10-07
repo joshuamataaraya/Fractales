@@ -60,6 +60,7 @@ estrellaAux(N,Tam):-
 	
 estrella(Lvl,Tam):-
 	logo,
+	right(-45),
 	estrellaAux(Lvl,Tam),
 	right(90),
 	estrellaAux(Lvl,Tam),
@@ -269,7 +270,7 @@ tonelAux(N,Tam):-
 	right(120).
 	
 tonel(Lvl,Tam):-
-	logo,
+	right(120),
 	tonelAux(Lvl,Tam),
 	right(120),
 	penup,
@@ -284,27 +285,71 @@ tonel(Lvl,Tam):-
 	pendown,
 	tonelAux(Lvl,Tam).
 	
-starAux(0,Tam,Ang):-
-	forward(Tam).
-starAux(N,Tam,Ang):-
+starAux(0,Tam):-
+	forward(Tam),
+	Neg is -1 * Tam,
+	forward(Neg).
+	
+starAux(N,Tam):-
 	Lvl is N-1,
 	Seg is Tam/3,
-	Neg is -1 * Seg,
-	Ang1 is Ang+3,
+	Rad is Tam/2,
 	
-	starAux(Lvl,Seg,Ang),
-	forward(Neg),
-	right(Ang1),
-	starAux(Lvl,Seg,Ang1),
-	forward(Neg).
-
-starAux(_,Tam,Ang):-
-	Ang > 360,
-	forward(Tam).
-
+	circulo(Rad),
+	starAux(Lvl,Seg),
+	right(90),
+	starAux(Lvl,Seg),
+	right(90),
+	starAux(Lvl,Seg),
+	right(90),
+	starAux(Lvl,Seg),
+	right(90),
+	
+	penup,
+	forward(Tam),
+	pendown,
+	
+	starAux(Lvl,Seg),
+	right(90),
+	starAux(Lvl,Seg),
+	right(90),
+	starAux(Lvl,Seg),
+	right(90),
+	starAux(Lvl,Seg),
+	right(90),
+	
+	penup,
+	forward(Tam),
+	pendown,
+	
+	starAux(Lvl,Seg),
+	right(90),
+	starAux(Lvl,Seg),
+	right(90),
+	starAux(Lvl,Seg),
+	right(90),
+	starAux(Lvl,Seg),
+	right(90).
+	
 star(Lvl,Tam):-
-	starAux(Lvl,Tam,0).
-	
+	logo,
+	starAux(Lvl,Tam),
+	penup,
+	right(90),
+	forward(Tam),
+	pendown,
+	starAux(Lvl,Tam),
+	penup,
+	right(90),
+	forward(Tam),
+	pendown,
+	starAux(Lvl,Tam),
+	penup,
+	right(90),
+	forward(Tam),
+	pendown,
+	starAux(Lvl,Tam).
+
 insideAux(0,Tam):-
 	circulo(Tam),
 	panalAux(1,Tam),
@@ -330,6 +375,35 @@ inside(N,Tam):-
 	insideAux(N,Tam),
 	right(120).
 	
+circleTonelAux(0,Tam):-
+	tonel(2,Tam).
+
+circleTonelAux(N,Tam):-
+	Seg is Tam - 1,
+	Lvl is N-1,
+	
+	circleTonelAux(Lvl,Seg),	
+
+	penup,
+	right(120),
+	forward(Tam),
+	pendown,
+	circleTonelAux(Lvl,Seg),
+
+	penup,
+	right(120),
+	forward(Tam),
+	pendown,
+	circleTonelAux(Lvl,Seg),
+	penup,
+	right(120),
+	forward(Tam),
+	pendown.
+	
+
+circleTonel(N,Tam):-
+	logo,
+	circleTonelAux(N,Tam).
 /*  
     ProLOGO - LOGO in Prolog.
 
