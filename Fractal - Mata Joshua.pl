@@ -13,6 +13,7 @@ copodenieveAux(N,Tam):-
 	copodenieveAux(Lvl,Seg).
 	
 copodenieve(Lvl,Tam):-
+	logo,
 	copodenieveAux(Lvl,Tam),
 	right(120),
 	copodenieveAux(Lvl,Tam),
@@ -36,6 +37,7 @@ corbatinAux(N,Tam):-
 	right(60).
 	
 corbatin(Lvl,Tam):-
+	logo,
 	corbatinAux(Lvl,Tam),
 	right(90),
 	corbatinAux(Lvl,Tam),
@@ -57,6 +59,7 @@ estrellaAux(N,Tam):-
 	right(30).
 	
 estrella(Lvl,Tam):-
+	logo,
 	estrellaAux(Lvl,Tam),
 	right(90),
 	estrellaAux(Lvl,Tam),
@@ -82,6 +85,7 @@ tapeteexternoAux(N,Tam):-
 	tapeteexternoAux(Lvl,Seg).
 	
 tapeteexterno(Lvl,Tam):-
+	logo,
 	tapeteexternoAux(Lvl,Tam),
 	right(90),
 	tapeteexternoAux(Lvl,Tam),
@@ -107,6 +111,7 @@ tapeteinternoAux(N,Tam):-
 	tapeteinternoAux(Lvl,Seg).
 	
 tapeteinterno(Lvl,Tam):-
+	logo,
 	tapeteinternoAux(Lvl,Tam),
 	right(90),
 	tapeteinternoAux(Lvl,Tam),
@@ -115,34 +120,216 @@ tapeteinterno(Lvl,Tam):-
 	right(90),
 	tapeteinternoAux(Lvl,Tam).		
 	
-/*
+
 panalAux(0,Tam):-
 	forward(Tam).
 	
 panalAux(N,Tam):-
 	Lvl is N-1,
 	Seg is Tam/3,
+	Neg is -1 * Seg,
 	penup,
-	left(90),
-	forward(MM),
+	forward(Seg),
+	pendown,
+	
+	left(135),
 	panalAux(Lvl,Seg),
+	forward(Neg),
+	left(90),
+	panalAux(Lvl,Seg),
+	forward(Neg),
+	left(135),
+	panalAux(Lvl,Seg),
+	
+	left(45),
+	panalAux(Lvl,Seg),
+	forward(Neg),
+	
 	right(90),
 	panalAux(Lvl,Seg),
-	left(90),
-	panalAux(Lvl,Seg),
-	left(90),
-	panalAux(Lvl,Seg),
-	right(90),
-	panalAux(Lvl,Seg).
+	forward(Neg),
+	
+	left(45),
+	penup,
+	forward(Seg),
+	pendown.
 	
 panal(Lvl,Tam):-
+	logo,
 	panalAux(Lvl,Tam),
 	right(90),
 	panalAux(Lvl,Tam),
 	right(90),
 	panalAux(Lvl,Tam),
 	right(90),
-	panalAux(Lvl,Tam).	*/
+	panalAux(Lvl,Tam).
+	
+
+arosAux(0,Tam):-
+	circulo(Tam).
+	
+arosAux(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	arosAux(Lvl,Seg),
+	right(120),
+	penup,
+	forward(Seg),
+	pendown,
+	
+	arosAux(Lvl,Seg),
+	right(120),
+	penup,
+	forward(Seg),
+	pendown,
+	arosAux(Lvl,Seg),
+	right(120),
+	penup,
+	forward(Seg),
+	pendown.
+	
+aros(Lvl,Tam):-
+	logo,
+	arosAux(Lvl,Tam).
+	
+/*
+circulo(Tam,1):-
+	forward(Tam).
+	
+circulo(Tam,Segs):-
+	forward(Tam),
+	right(2),
+	Seg is Segs-1,
+	circulo(Tam,Seg).*/
+
+circulo(R):-
+	get(@myturtle_class,x,X),
+	get(@myturtle_class,y,Y),
+	circulo(_,_,R,X,Y,0,2*pi/20),
+	penup,
+	setxy(X,Y),
+	pendown.
+circulo(_,_,_,_,_,X,_):- 
+	Lim is 2*pi,
+	X>Lim,!.
+circulo(X,Y,R,H,K,0,Step):-
+	X is H + R * cos(0),
+	Y is K+R*sin(0),
+	penup,
+	setxy(X,Y),
+	pendown,
+	ThetaAux is Step,
+	circulo(_,_,R,H,K,ThetaAux,Step).
+circulo(X,Y,R,H,K,Theta,Step):-
+	X is H + R * cos(Theta),
+	Y is K+R*sin(Theta),
+	setxy(X,Y),
+	ThetaAux is Theta+Step,
+	circulo(_,_,R,H,K,ThetaAux,Step).
+
+
+tonelAux(0,Tam):-
+	circulo(Tam).
+	
+tonelAux(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	ChildMid is Tam-Seg,
+	Neg is -1 * ChildMid,
+	
+	tonelAux(Lvl,Tam),
+	
+	penup,
+	forward(ChildMid),
+	pendown,
+	
+	tonelAux(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	
+	right(120),
+	forward(ChildMid),
+	pendown,
+	
+	tonelAux(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	
+	right(120),
+	forward(ChildMid),
+	pendown,
+	
+	tonelAux(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	
+	right(120).
+	
+tonel(Lvl,Tam):-
+	logo,
+	tonelAux(Lvl,Tam),
+	right(120),
+	penup,
+	forward(Tam),
+	forward(Tam),
+	pendown,
+	tonelAux(Lvl,Tam),
+	right(120),
+	penup,
+	forward(Tam),
+	forward(Tam),
+	pendown,
+	tonelAux(Lvl,Tam).
+	
+starAux(0,Tam,Ang):-
+	forward(Tam).
+starAux(N,Tam,Ang):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	Neg is -1 * Seg,
+	Ang1 is Ang+3,
+	
+	starAux(Lvl,Seg,Ang),
+	forward(Neg),
+	right(Ang1),
+	starAux(Lvl,Seg,Ang1),
+	forward(Neg).
+
+starAux(_,Tam,Ang):-
+	Ang > 360,
+	forward(Tam).
+
+star(Lvl,Tam):-
+	starAux(Lvl,Tam,0).
+	
+insideAux(0,Tam):-
+	circulo(Tam),
+	panalAux(1,Tam),
+	right(180),
+	panalAux(1,Tam).
+	
+insideAux(N,Tam):-
+	Seg is Tam-5,
+	Lvl is N-1,	
+	arosAux(N,Tam),
+	insideAux(Lvl,Tam),
+	insideAux(Lvl,Seg).
+	
+inside(N,Tam):-
+	logo,
+	penup,
+	forward(-50),
+	pendown,
+	insideAux(N,Tam),
+	right(120),
+	insideAux(N,Tam),
+	right(120),
+	insideAux(N,Tam),
+	right(120).
+	
 /*  
     ProLOGO - LOGO in Prolog.
 
