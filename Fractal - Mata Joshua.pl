@@ -2210,19 +2210,6 @@ logo(W,H) :-
 	send(Input,length(W)),
 	send(Command,append(Input)),
 	send(@text,below,@graphics),
-	send(Command,below,@graphics),
-	new(Exec,button('Exec',message(Input,execute))),
-	new(Quit,button('Quit',message(@graphics,destroy))),
-	new(Open,button('Open',message(@prolog,loadscript))),
-	new(TurtleSel,button('Turtle',message(@prolog,useturtle))),
-	new(PenguinSel,button('Penguin',message(@prolog,usepenguin))),
-	send(Command,append(Exec,right)),
-	send(Command,append(Quit,right)),
-	send(Command,append(Open,below)),
-	send(Command,append(TurtleSel,right)),
-	send(Command,append(PenguinSel,right)),
-	send(Command,default_button(Exec)),
-	send(Command,caret(Input)),
 	send(@graphics,open),
 	init.
 
@@ -2230,7 +2217,10 @@ init :- defaultcolors,
 	clearscreen,
 	showturtle,
 	pendown,
-	welcomemessage.
+	penup,
+	forward(-150),
+	pendown,
+	hideturtle.
 
 
 
