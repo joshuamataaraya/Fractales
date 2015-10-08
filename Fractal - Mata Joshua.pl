@@ -1,3 +1,80 @@
+/*
+	Instituto Tecnológico de Costa Rica
+	Escuela de Computación
+	Ingeniería en Computación
+	Lenguajes de Programación
+	
+	Estudiante: Joshua Mata Araya
+	Carnet: 2014079095
+	Correo: joshuamataa@gmail.com
+	Descripción: Esta es una implementación de fractales en prolog. 
+	___________________________________________________________________________
+	ANALISIS DE RESULTADOS
+	
+	Todas las relaciones se han definido con éxito.
+	Se logró implementar los siguientes fractales:
+		-copodenieve
+		-corbatin 
+		-estrella.
+		-tapeteexterno
+		-tapeteinterno
+		-panal
+		-aros
+		-tonel
+		-star
+		-inside	
+		-tapetePanal
+	NOTA: De cada uno de los fractales anteriores, se implementó la versión
+		monocromática, con colores definidos y con colores aleatorios.
+	
+	___________________________________________________________________________
+	En el código se encuentran en el orden mencionado, primero se encuentra 
+	la versión monocromática de ellos, luego la versión a colores (se
+	identifican con la palabra "Color" al final del nombre, ej: starColor)
+	y posteriormente la versión con colores random de los mismos (se 
+	identifican con la palabra "Random" al final del nombre, 
+	ej: copodenieveRandom).
+	
+	
+	___________________________________________________________________________
+	MANUAL DE USUARIO
+	
+	Para ejecutar cualquiera de los fractales, en swi-prolog hay que
+	escribir la relación con la siguiente sintaxis:
+			nombre(nivel,tamaño).
+	
+	Es necesario tener todos los archivos de la biblioteca de Prologo en 
+	la misma ubicación del archivo, para esto el proyecto se encuentra en un
+	archivo comprimido, si se descomprime todo en un mismo lugar, el programa
+	funcionará correctamente. En caso de no tener la biblioteca, se puede
+	descargar del siguiente enlace: 
+		https://www.dropbox.com/s/s1kfqejsv1t83qe/PROLOGO.zip?dl=0
+	
+	Como nombre se pueden pueden especificar los siguientes fractales:
+		-copodenieve
+		-corbatin 
+		-estrella.
+		-tapeteexterno
+		-tapeteinterno
+		-panal
+		-aros
+		-tonel
+		-star
+		-inside	
+		-tapetePanal
+	Se puede agregar la parabra "Color" al final del nombre para poder ver 
+	el fractal con colores o "Random" para ver la función con colores random.
+	
+	Nivel y valor son dos números, se espera que el nivel no sobrepase
+	el numero 5, pero esto depende de la capacidad de procesamiento del 
+	computador, y que el tamaño no sobrepase a 500, pero esto depende 
+	del tamaño de la pantalla.
+*/
+
+/*
+___________________________________________________________________________
+	VERSION MONOCROMÁTICA
+*/
 copodenieveAux(0,Tam):-
 	forward(Tam).
 	
@@ -13,7 +90,7 @@ copodenieveAux(N,Tam):-
 	copodenieveAux(Lvl,Seg).
 	
 copodenieve(Lvl,Tam):-
-	logo,
+	logo,setpencolor(white), setbgcolor(black), 
 	copodenieveAux(Lvl,Tam),
 	right(120),
 	copodenieveAux(Lvl,Tam),
@@ -37,7 +114,7 @@ corbatinAux(N,Tam):-
 	right(60).
 	
 corbatin(Lvl,Tam):-
-	logo,
+	logo,setpencolor(white), setbgcolor(black), 
 	corbatinAux(Lvl,Tam),
 	right(90),
 	corbatinAux(Lvl,Tam),
@@ -59,7 +136,7 @@ estrellaAux(N,Tam):-
 	right(30).
 	
 estrella(Lvl,Tam):-
-	logo,
+	logo,setpencolor(white), setbgcolor(black), 
 	right(-45),
 	estrellaAux(Lvl,Tam),
 	right(90),
@@ -86,7 +163,7 @@ tapeteexternoAux(N,Tam):-
 	tapeteexternoAux(Lvl,Seg).
 	
 tapeteexterno(Lvl,Tam):-
-	logo,
+	logo,setpencolor(white), setbgcolor(black), 
 	tapeteexternoAux(Lvl,Tam),
 	right(90),
 	tapeteexternoAux(Lvl,Tam),
@@ -112,7 +189,7 @@ tapeteinternoAux(N,Tam):-
 	tapeteinternoAux(Lvl,Seg).
 	
 tapeteinterno(Lvl,Tam):-
-	logo,
+	logo,setpencolor(white), setbgcolor(black), 
 	tapeteinternoAux(Lvl,Tam),
 	right(90),
 	tapeteinternoAux(Lvl,Tam),
@@ -156,7 +233,7 @@ panalAux(N,Tam):-
 	pendown.
 	
 panal(Lvl,Tam):-
-	logo,
+	logo,setpencolor(white), setbgcolor(black), 
 	panalAux(Lvl,Tam),
 	right(90),
 	panalAux(Lvl,Tam),
@@ -190,43 +267,10 @@ arosAux(N,Tam):-
 	pendown.
 	
 aros(Lvl,Tam):-
-	logo,
+	logo,setpencolor(white), setbgcolor(black), 
 	arosAux(Lvl,Tam).
 	
-/*
-circulo(Tam,1):-
-	forward(Tam).
-	
-circulo(Tam,Segs):-
-	forward(Tam),
-	right(2),
-	Seg is Segs-1,
-	circulo(Tam,Seg).*/
 
-circulo(R):-
-	get(@myturtle_class,x,X),
-	get(@myturtle_class,y,Y),
-	circulo(_,_,R,X,Y,0,2*pi/20),
-	penup,
-	setxy(X,Y),
-	pendown.
-circulo(_,_,_,_,_,X,_):- 
-	Lim is 2*pi,
-	X>Lim,!.
-circulo(X,Y,R,H,K,0,Step):-
-	X is H + R * cos(0),
-	Y is K+R*sin(0),
-	penup,
-	setxy(X,Y),
-	pendown,
-	ThetaAux is Step,
-	circulo(_,_,R,H,K,ThetaAux,Step).
-circulo(X,Y,R,H,K,Theta,Step):-
-	X is H + R * cos(Theta),
-	Y is K+R*sin(Theta),
-	setxy(X,Y),
-	ThetaAux is Theta+Step,
-	circulo(_,_,R,H,K,ThetaAux,Step).
 
 
 tonelAux(0,Tam):-
@@ -270,6 +314,7 @@ tonelAux(N,Tam):-
 	right(120).
 	
 tonel(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
 	right(120),
 	tonelAux(Lvl,Tam),
 	right(120),
@@ -332,7 +377,7 @@ starAux(N,Tam):-
 	right(90).
 	
 star(Lvl,Tam):-
-	logo,
+	logo,setpencolor(white), setbgcolor(black), 
 	starAux(Lvl,Tam),
 	penup,
 	right(90),
@@ -362,9 +407,9 @@ insideAux(N,Tam):-
 	arosAux(N,Tam),
 	insideAux(Lvl,Tam),
 	insideAux(Lvl,Seg).
-	
+
 inside(N,Tam):-
-	logo,
+	logo,setpencolor(white), setbgcolor(black), 
 	penup,
 	forward(-50),
 	pendown,
@@ -411,7 +456,7 @@ tapetePanalAux(N,Tam):-
 	pendown.
 	
 tapetePanal(Lvl,Tam):-
-	logo,
+	logo,setpencolor(white), setbgcolor(black), 
 	tapetePanalAux(Lvl,Tam),
 	right(90),
 	tapetePanalAux(Lvl,Tam),
@@ -419,6 +464,981 @@ tapetePanal(Lvl,Tam):-
 	tapetePanalAux(Lvl,Tam),
 	right(90),
 	tapetePanalAux(Lvl,Tam).	
+	
+/*
+___________________________________________________________________________
+	VERSION COLORIDA
+*/
+copodenieveAuxColor(0,Tam):-
+	forward(Tam).
+	
+copodenieveAuxColor(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	copodenieveAuxColor(Lvl,Seg),
+	left(60),
+	copodenieveAuxColor(Lvl,Seg),
+	right(120),
+	copodenieveAuxColor(Lvl,Seg),
+	left(60),
+	copodenieveAuxColor(Lvl,Seg).
+	
+copodenieveColor(Lvl,Tam):-
+	logo, setbgcolor(black),
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	copodenieveAuxColor(Lvl,Tam),
+	right(120),
+	Color2 is 5, 
+	 colore(Color2,Nomb2), 
+	 setpencolor(Nomb2),
+	copodenieveAuxColor(Lvl,Tam),
+	right(120),
+	Color3 is 6, 
+	 colore(Color3,Nomb3), 
+	setpencolor(Nomb3),
+	copodenieveAuxColor(Lvl,Tam),
+	right(120).
+	
+corbatinAuxColor(0,Tam):-
+	forward(Tam).
+	
+corbatinAuxColor(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	left(60),
+	corbatinAuxColor(Lvl,Seg),
+	right(120),
+	corbatinAuxColor(Lvl,Seg),
+	corbatinAuxColor(Lvl,Seg),
+	left(120),
+	corbatinAuxColor(Lvl,Seg),
+	right(60).
+	
+corbatinColor(Lvl,Tam):-
+	logo, setbgcolor(black),
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	corbatinAuxColor(Lvl,Tam),
+	right(90),
+	Color2 is 5, 
+	 colore(Color2,Nomb2), 
+	 setpencolor(Nomb2),
+	corbatinAuxColor(Lvl,Tam),
+	right(90),
+	Color3 is 6, 
+	 colore(Color3,Nomb3), 
+	setpencolor(Nomb3),
+	corbatinAuxColor(Lvl,Tam),
+	right(90),
+	Color4 is 7, 
+	 colore(Color4,Nomb4), 
+	setpencolor(Nomb4),
+	corbatinAuxColor(Lvl,Tam).
+	
+estrellaAuxColor(0,Tam):-
+	forward(Tam).
+	
+estrellaAuxColor(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	right(30),
+	estrellaAuxColor(Lvl,Seg),
+	left(60),
+	estrellaAuxColor(Lvl,Seg),
+	right(30).
+	
+estrellaColor(Lvl,Tam):-
+	logo, setbgcolor(black),
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	right(-45),
+	estrellaAuxColor(Lvl,Tam),
+	right(90),
+	Color2 is 5, 
+	 colore(Color2,Nomb2), 
+	 setpencolor(Nomb2),
+	estrellaAuxColor(Lvl,Tam),
+	right(90),
+	Color3 is 6, 
+	 colore(Color3,Nomb3), 
+	setpencolor(Nomb3),
+	estrellaAuxColor(Lvl,Tam),
+	right(90),
+	Color4 is 7, 
+	 colore(Color4,Nomb4), 
+	setpencolor(Nomb4),
+	estrellaAuxColor(Lvl,Tam).	
+
+tapeteexternoAuxColor(0,Tam):-
+	forward(Tam).
+	
+tapeteexternoAuxColor(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	tapeteexternoAuxColor(Lvl,Seg),
+	left(90),
+	tapeteexternoAuxColor(Lvl,Seg),
+	right(90),
+	tapeteexternoAuxColor(Lvl,Seg),
+	right(90),
+	tapeteexternoAuxColor(Lvl,Seg),
+	left(90),
+	tapeteexternoAuxColor(Lvl,Seg).
+	
+tapeteexternoColor(Lvl,Tam):-
+	logo, setbgcolor(black),
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	tapeteexternoAuxColor(Lvl,Tam),
+	right(90),
+	Color2 is 5, 
+	 colore(Color2,Nomb2), 
+	 setpencolor(Nomb2),
+	tapeteexternoAuxColor(Lvl,Tam),
+	right(90),
+	Color3 is 6, 
+	 colore(Color3,Nomb3), 
+	setpencolor(Nomb3),
+	tapeteexternoAuxColor(Lvl,Tam),
+	right(90),
+	Color4 is 7, 
+	 colore(Color4,Nomb4), 
+	setpencolor(Nomb4),
+	tapeteexternoAuxColor(Lvl,Tam).	
+
+tapeteinternoAuxColor(0,Tam):-
+	forward(Tam).
+	
+tapeteinternoAuxColor(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	tapeteinternoAuxColor(Lvl,Seg),
+	right(90),
+	tapeteinternoAuxColor(Lvl,Seg),
+	left(90),
+	tapeteinternoAuxColor(Lvl,Seg),
+	left(90),
+	tapeteinternoAuxColor(Lvl,Seg),
+	right(90),
+	tapeteinternoAuxColor(Lvl,Seg).
+	
+tapeteinternoColor(Lvl,Tam):-
+	logo, setbgcolor(black),
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	tapeteinternoAuxColor(Lvl,Tam),
+	right(90),
+	Color2 is 5, 
+	 colore(Color2,Nomb2), 
+	 setpencolor(Nomb2),
+	tapeteinternoAuxColor(Lvl,Tam),
+	right(90),
+	Color3 is 6, 
+	 colore(Color3,Nomb3), 
+	setpencolor(Nomb3),
+	tapeteinternoAuxColor(Lvl,Tam),
+	right(90),
+	Color4 is 7, 
+	 colore(Color4,Nomb4), 
+	setpencolor(Nomb4),
+	tapeteinternoAuxColor(Lvl,Tam).		
+	
+
+panalAuxColor(0,Tam):-
+	forward(Tam).
+	
+panalAuxColor(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	Neg is -1 * Seg,
+	penup,
+	forward(Seg),
+	pendown,
+	
+	left(135),
+	panalAuxColor(Lvl,Seg),
+	forward(Neg),
+	left(90),
+	panalAuxColor(Lvl,Seg),
+	forward(Neg),
+	left(135),
+	panalAuxColor(Lvl,Seg),
+	
+	left(45),
+	panalAuxColor(Lvl,Seg),
+	forward(Neg),
+	
+	right(90),
+	panalAuxColor(Lvl,Seg),
+	forward(Neg),
+	
+	left(45),
+	penup,
+	forward(Seg),
+	pendown.
+	
+panalColor(Lvl,Tam):-
+	logo, setbgcolor(black),
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	panalAuxColor(Lvl,Tam),
+	right(90),
+	Color2 is 5, 
+	 colore(Color2,Nomb2), 
+	 setpencolor(Nomb2),
+	panalAuxColor(Lvl,Tam),
+	right(90),
+	Color3 is 6, 
+	 colore(Color3,Nomb3), 
+	setpencolor(Nomb3),
+	panalAuxColor(Lvl,Tam),
+	right(90),
+	Color4 is 7, 
+	 colore(Color4,Nomb4), 
+	setpencolor(Nomb4),
+	panalAuxColor(Lvl,Tam).
+	
+
+arosAuxColor(0,Tam):-
+	circulo(Tam).
+	
+arosAuxColor(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	arosAuxColor(Lvl,Seg),
+	right(120),
+	penup,
+	forward(Seg),
+	pendown,
+	
+	arosAuxColor(Lvl,Seg),
+	right(120),
+	penup,
+	forward(Seg),
+	pendown,
+	arosAuxColor(Lvl,Seg),
+	right(120),
+	penup,
+	forward(Seg),
+	pendown.
+	
+arosColor(Lvl,Tam):-
+	logo, setbgcolor(black),
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	arosAuxColor(Lvl,Tam).
+
+
+tonelAuxColor(0,Tam):-
+	circulo(Tam).
+	
+tonelAuxColor(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	ChildMid is Tam-Seg,
+	Neg is -1 * ChildMid,
+	
+	tonelAuxColor(Lvl,Tam),
+	
+	penup,
+	forward(ChildMid),
+	pendown,
+	
+	tonelAuxColor(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	
+	right(120),
+	forward(ChildMid),
+	pendown,
+	
+	tonelAuxColor(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	
+	right(120),
+	forward(ChildMid),
+	pendown,
+	
+	tonelAuxColor(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	
+	right(120).
+	
+tonelColor(Lvl,Tam):-
+	logo, setbgcolor(black),
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	right(120),
+	tonelAuxColor(Lvl,Tam),
+	right(120),
+	penup,
+	forward(Tam),
+	forward(Tam),
+	pendown,
+	Color2 is 5, 
+	 colore(Color2,Nomb2), 
+	 setpencolor(Nomb2),
+	tonelAuxColor(Lvl,Tam),
+	right(120),
+	penup,
+	forward(Tam),
+	forward(Tam),
+	pendown,
+	Color3 is 6, 
+	 colore(Color3,Nomb3), 
+	setpencolor(Nomb3),
+	tonelAuxColor(Lvl,Tam).
+	
+starAuxColor(0,Tam):-
+	forward(Tam),
+	Neg is -1 * Tam,
+	forward(Neg).
+	
+starAuxColor(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	Rad is Tam/2,
+	
+	circulo(Rad),
+	starAuxColor(Lvl,Seg),
+	right(90),
+	starAuxColor(Lvl,Seg),
+	right(90),
+	starAuxColor(Lvl,Seg),
+	right(90),
+	starAuxColor(Lvl,Seg),
+	right(90),
+	
+	penup,
+	forward(Tam),
+	pendown,
+	
+	starAuxColor(Lvl,Seg),
+	right(90),
+	starAuxColor(Lvl,Seg),
+	right(90),
+	starAuxColor(Lvl,Seg),
+	right(90),
+	starAuxColor(Lvl,Seg),
+	right(90),
+	
+	penup,
+	forward(Tam),
+	pendown,
+	
+	starAuxColor(Lvl,Seg),
+	right(90),
+	starAuxColor(Lvl,Seg),
+	right(90),
+	starAuxColor(Lvl,Seg),
+	right(90),
+	starAuxColor(Lvl,Seg),
+	right(90).
+	
+starColor(Lvl,Tam):-
+	logo, setbgcolor(black),
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	starAuxColor(Lvl,Tam),
+	penup,
+	right(90),
+	forward(Tam),
+	pendown,
+	Color2 is 5, 
+	 colore(Color2,Nomb2), 
+	 setpencolor(Nomb2),
+	starAuxColor(Lvl,Tam),
+	penup,
+	right(90),
+	forward(Tam),
+	pendown,
+	Color3 is 6, 
+	 colore(Color3,Nomb3), 
+	setpencolor(Nomb3),
+	starAuxColor(Lvl,Tam),
+	penup,
+	right(90),
+	forward(Tam),
+	pendown,
+	Color4 is 7, 
+	 colore(Color4,Nomb4), 
+	setpencolor(Nomb4),
+	starAuxColor(Lvl,Tam).
+
+insideAuxColor(0,Tam):-
+	circulo(Tam),
+	panalAuxColor(1,Tam),
+	right(180),
+	panalAux(1,Tam).
+	
+insideAuxColor(N,Tam):-
+	Seg is Tam-5,
+	Lvl is N-1,	
+	arosAuxColor(N,Tam),
+	insideAuxColor(Lvl,Tam),
+	insideAuxColor(Lvl,Seg).
+	
+insideColor(N,Tam):-
+	logo, setbgcolor(black),
+	penup,
+	forward(-50),
+	pendown,
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	insideAuxColor(N,Tam),
+	right(120),
+	Color2 is 5, 
+	 colore(Color2,Nomb2), 
+	 setpencolor(Nomb2),
+	insideAuxColor(N,Tam),
+	right(120),
+	Color3 is 6, 
+	 colore(Color3,Nomb3), 
+	setpencolor(Nomb3),
+	insideAuxColor(N,Tam),
+	right(120).
+	
+tapetePanalAuxColor(0,Tam):-
+	forward(Tam).
+
+	
+tapetePanalAuxColor(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	Neg is -1*Seg,
+	
+	tapeteinternoAuxColor(Lvl,Seg),
+	right(90),
+	tapeteinternoAuxColor(Lvl,Seg),
+	left(90),
+	tapeteinternoAuxColor(Lvl,Seg),
+	left(90),
+	tapeteinternoAuxColor(Lvl,Seg),
+	right(90),
+	tapeteinternoAuxColor(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	right(180),
+	pendown,
+	panalAuxColor(Lvl,Seg),	
+	right(90),
+	panalAuxColor(Lvl,Seg),
+	right(90),
+	panalAuxColor(Lvl,Seg),
+	right(90),
+	panalAuxColor(Lvl,Seg),
+	penup,
+	left(90),
+	forward(Seg),
+	pendown.
+	
+tapetePanalColor(Lvl,Tam):-
+	logo, setbgcolor(black),
+	Color1 is 4, 
+	 colore(Color1,Nomb1), 
+	 setpencolor(Nomb1),
+	tapetePanalAuxColor(Lvl,Tam),
+	right(90),
+	Color2 is 5, 
+	 colore(Color2,Nomb2), 
+	 setpencolor(Nomb2),
+	tapetePanalAuxColor(Lvl,Tam),
+	Color3 is 6, 
+	 colore(Color3,Nomb3), 
+	setpencolor(Nomb3),
+	right(90),
+	tapetePanalAuxColor(Lvl,Tam),
+	right(90),
+	Color4 is 7, 
+	 colore(Color4,Nomb4), 
+	setpencolor(Nomb4),
+	tapetePanalAuxColor(Lvl,Tam).		
+	
+	
+/*
+___________________________________________________________________________
+	VERSION ALEATORIA
+*/
+copodenieveAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+	forward(Tam).
+	
+copodenieveAuxRandom(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	copodenieveAuxRandom(Lvl,Seg),
+	left(60),
+	copodenieveAuxRandom(Lvl,Seg),
+	right(120),
+	copodenieveAuxRandom(Lvl,Seg),
+	left(60),
+	copodenieveAuxRandom(Lvl,Seg).
+	
+copodenieveRandom(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	copodenieveAuxRandom(Lvl,Tam),
+	right(120),
+	copodenieveAuxRandom(Lvl,Tam),
+	right(120),
+	copodenieveAuxRandom(Lvl,Tam),
+	right(120).
+	
+corbatinAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+
+	forward(Tam).
+	
+corbatinAuxRandom(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	left(60),
+	corbatinAuxRandom(Lvl,Seg),
+	right(120),
+	corbatinAuxRandom(Lvl,Seg),
+	corbatinAuxRandom(Lvl,Seg),
+	left(120),
+	corbatinAuxRandom(Lvl,Seg),
+	right(60).
+	
+corbatinRandom(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	corbatinAuxRandom(Lvl,Tam),
+	right(90),
+	corbatinAuxRandom(Lvl,Tam),
+	right(90),
+	corbatinAuxRandom(Lvl,Tam),
+	right(90),
+	corbatinAuxRandom(Lvl,Tam).
+	
+estrellaAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+
+	forward(Tam).
+	
+estrellaAuxRandom(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	right(30),
+	estrellaAuxRandom(Lvl,Seg),
+	left(60),
+	estrellaAuxRandom(Lvl,Seg),
+	right(30).
+	
+estrellaRandom(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	right(-45),
+	estrellaAuxRandom(Lvl,Tam),
+	right(90),
+	estrellaAuxRandom(Lvl,Tam),
+	right(90),
+	estrellaAuxRandom(Lvl,Tam),
+	right(90),
+	estrellaAuxRandom(Lvl,Tam).	
+
+tapeteexternoAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+
+	forward(Tam).
+	
+tapeteexternoAuxRandom(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	tapeteexternoAuxRandom(Lvl,Seg),
+	left(90),
+	tapeteexternoAuxRandom(Lvl,Seg),
+	right(90),
+	tapeteexternoAuxRandom(Lvl,Seg),
+	right(90),
+	tapeteexternoAuxRandom(Lvl,Seg),
+	left(90),
+	tapeteexternoAuxRandom(Lvl,Seg).
+	
+tapeteexternoRandom(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	tapeteexternoAuxRandom(Lvl,Tam),
+	right(90),
+	tapeteexternoAuxRandom(Lvl,Tam),
+	right(90),
+	tapeteexternoAuxRandom(Lvl,Tam),
+	right(90),
+	tapeteexternoAuxRandom(Lvl,Tam).	
+
+tapeteinternoAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+
+	forward(Tam).
+	
+tapeteinternoAuxRandom(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	tapeteinternoAuxRandom(Lvl,Seg),
+	right(90),
+	tapeteinternoAuxRandom(Lvl,Seg),
+	left(90),
+	tapeteinternoAuxRandom(Lvl,Seg),
+	left(90),
+	tapeteinternoAuxRandom(Lvl,Seg),
+	right(90),
+	tapeteinternoAuxRandom(Lvl,Seg).
+	
+tapeteinternoRandom(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	tapeteinternoAuxRandom(Lvl,Tam),
+	right(90),
+	tapeteinternoAuxRandom(Lvl,Tam),
+	right(90),
+	tapeteinternoAuxRandom(Lvl,Tam),
+	right(90),
+	tapeteinternoAuxRandom(Lvl,Tam).		
+	
+
+panalAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+
+	forward(Tam).
+	
+panalAuxRandom(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	Neg is -1 * Seg,
+	penup,
+	forward(Seg),
+	pendown,
+	
+	left(135),
+	panalAuxRandom(Lvl,Seg),
+	forward(Neg),
+	left(90),
+	panalAuxRandom(Lvl,Seg),
+	forward(Neg),
+	left(135),
+	panalAuxRandom(Lvl,Seg),
+	
+	left(45),
+	panalAuxRandom(Lvl,Seg),
+	forward(Neg),
+	
+	right(90),
+	panalAuxRandom(Lvl,Seg),
+	forward(Neg),
+	
+	left(45),
+	penup,
+	forward(Seg),
+	pendown.
+	
+panalRandom(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	panalAuxRandom(Lvl,Tam),
+	right(90),
+	panalAuxRandom(Lvl,Tam),
+	right(90),
+	panalAuxRandom(Lvl,Tam),
+	right(90),
+	panalAuxRandom(Lvl,Tam).
+	
+
+arosAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+
+	circulo(Tam).
+	
+arosAuxRandom(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	arosAuxRandom(Lvl,Seg),
+	right(120),
+	penup,
+	forward(Seg),
+	pendown,
+	
+	arosAuxRandom(Lvl,Seg),
+	right(120),
+	penup,
+	forward(Seg),
+	pendown,
+	arosAuxRandom(Lvl,Seg),
+	right(120),
+	penup,
+	forward(Seg),
+	pendown.
+	
+arosRandom(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	arosAuxRandom(Lvl,Tam).
+
+tonelAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+
+	circulo(Tam).
+	
+tonelAuxRandom(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	ChildMid is Tam-Seg,
+	Neg is -1 * ChildMid,
+	
+	tonelAuxRandom(Lvl,Tam),
+	
+	penup,
+	forward(ChildMid),
+	pendown,
+	
+	tonelAuxRandom(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	
+	right(120),
+	forward(ChildMid),
+	pendown,
+	
+	tonelAuxRandom(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	
+	right(120),
+	forward(ChildMid),
+	pendown,
+	
+	tonelAuxRandom(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	
+	right(120).
+	
+tonelRandom(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	right(120),
+	tonelAuxRandom(Lvl,Tam),
+	right(120),
+	penup,
+	forward(Tam),
+	forward(Tam),
+	pendown,
+	tonelAuxRandom(Lvl,Tam),
+	right(120),
+	penup,
+	forward(Tam),
+	forward(Tam),
+	pendown,
+	tonelAuxRandom(Lvl,Tam).
+	
+starAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+	forward(Tam),
+	Neg is -1 * Tam,
+	forward(Neg).
+	
+starAuxRandom(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	Rad is Tam/2,
+	
+	circulo(Rad),
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	
+	penup,
+	forward(Tam),
+	pendown,
+	
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	
+	penup,
+	forward(Tam),
+	pendown,
+	
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	starAuxRandom(Lvl,Seg),
+	right(90),
+	starAuxRandom(Lvl,Seg),
+	right(90).
+	
+starRandom(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	starAuxRandom(Lvl,Tam),
+	penup,
+	right(90),
+	forward(Tam),
+	pendown,
+	starAuxRandom(Lvl,Tam),
+	penup,
+	right(90),
+	forward(Tam),
+	pendown,
+	starAuxRandom(Lvl,Tam),
+	penup,
+	right(90),
+	forward(Tam),
+	pendown,
+	starAuxRandom(Lvl,Tam).
+
+insideAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+	circulo(Tam),
+	panalAux(1,Tam),
+	right(180),
+	panalAux(1,Tam).
+	
+insideAuxRandom(N,Tam):-
+	Seg is Tam-5,
+	Lvl is N-1,	
+	arosAuxRandom(N,Tam),
+	insideAuxRandom(Lvl,Tam),
+	insideAuxRandom(Lvl,Seg).
+	
+insideRandom(N,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	penup,
+	forward(-50),
+	pendown,
+	insideAuxRandom(N,Tam),
+	right(120),
+	insideAuxRandom(N,Tam),
+	right(120),
+	insideAuxRandom(N,Tam),
+	right(120).
+	
+tapetePanalAuxRandom(0,Tam):-
+	random_between(2,7,RandC),
+	colore(RandC,Nomb), 
+	setpencolor(Nomb),
+	forward(Tam).
+
+	
+tapetePanalAuxRandom(N,Tam):-
+	Lvl is N-1,
+	Seg is Tam/3,
+	Neg is -1*Seg,
+	
+	tapeteinternoAuxRandom(Lvl,Seg),
+	right(90),
+	tapeteinternoAuxRandom(Lvl,Seg),
+	left(90),
+	tapeteinternoAuxRandom(Lvl,Seg),
+	left(90),
+	tapeteinternoAuxRandom(Lvl,Seg),
+	right(90),
+	tapeteinternoAuxRandom(Lvl,Seg),
+	
+	penup,
+	forward(Neg),
+	right(180),
+	pendown,
+	panalAuxRandom(Lvl,Seg),	
+	right(90),
+	panalAuxRandom(Lvl,Seg),
+	right(90),
+	panalAuxRandom(Lvl,Seg),
+	right(90),
+	panalAuxRandom(Lvl,Seg),
+	penup,
+	left(90),
+	forward(Seg),
+	pendown.
+	
+tapetePanalRandom(Lvl,Tam):-
+	logo,setpencolor(white), setbgcolor(black), 
+	tapetePanalAuxRandom(Lvl,Tam),
+	right(90),
+	tapetePanalAuxRandom(Lvl,Tam),
+	right(90),
+	tapetePanalAuxRandom(Lvl,Tam),
+	right(90),
+	tapetePanalAuxRandom(Lvl,Tam).	
+
+	
+/*
+___________________________________________________________________________
+	IMPLEMENTACIONES ADICIONALES
+*/
+circulo(R):-
+	get(@myturtle_class,x,X),
+	get(@myturtle_class,y,Y),
+	circulo(_,_,R,X,Y,0,2*pi/20),
+	penup,
+	setxy(X,Y),
+	pendown.
+circulo(_,_,_,_,_,X,_):- 
+	Lim is 2*pi,
+	X>Lim,!.
+circulo(X,Y,R,H,K,0,Step):-
+	X is H + R * cos(0),
+	Y is K+R*sin(0),
+	penup,
+	setxy(X,Y),
+	pendown,
+	ThetaAux is Step,
+	circulo(_,_,R,H,K,ThetaAux,Step).
+circulo(X,Y,R,H,K,Theta,Step):-
+	X is H + R * cos(Theta),
+	Y is K+R*sin(Theta),
+	setxy(X,Y),
+	ThetaAux is Theta+Step,
+	circulo(_,_,R,H,K,ThetaAux,Step).
+	
+/*
+___________________________________________________________________________
+	BIBIOTECAS UTILIZADAS
+*/	
+
+	
 /*  
     ProLOGO - LOGO in Prolog.
 
